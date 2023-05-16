@@ -13,10 +13,11 @@ const Register = () => {
 
   const handleRegistration = (event) => {
     event.preventDefault();
-    if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password)) {
-      setError("password not valid need 8 char ");
+
+    if (!/(?=.*[A-Z])/.test(password)) {
+      setError('please add at least one uppercase')
       return;
-    }
+  }
     if ((name, email, password)) {
       registerUser(email, password)
         .then((result) => {
