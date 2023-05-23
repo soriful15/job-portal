@@ -17,38 +17,56 @@ const MyJobs = () => {
   const [searchText, setSearchText] = useState("");
   const [modalShow, setModalShow] = React.useState(false);
   const [control, setControl] = useState(false);
+
   useEffect(() => {
-    fetch(`http://localhost:5000/myJobs/${user?.email}`)
+    fetch(`http://localhost:3000/myJobs/${user?.email}`)
       .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setJobs(data);
-      });
-  }, [user, control]);
+      .then(data => {
+        console.log(data)
+        setJobs(data)
+      })
+  }, [user, control])
+
   const handleSearch = () => {
-    fetch(`http://localhost:5000/getJobsByText/${searchText}`)
+    fetch(`http://localhost:3000/getJobsByText/${searchText}`)
       .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setJobs(data);
-      });
-  };
+      .then(data => {
+        console.log(data)
+        setJobs(data)
+      })
+  }
+
+  // const handleJobUpdate = (data) => {
+  //   console.log(data);
+  //   fetch(`http://localhost:5000/updateJob/${data._id}`, {
+  //     method: "PUT",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify(data),
+  //   })
+  //     .then((res) => res.json())
+  //     .then((result) => {
+  //       if (result.modifiedCount > 0) {
+  //         setControl(!control);
+  //       }
+  //       console.log(result);
+  //     });
+  // };
 
   const handleJobUpdate = (data) => {
-    console.log(data);
-    fetch(`http://localhost:5000/updateJob/${data._id}`, {
+    console.log(data)
+    fetch(`http://localhost:3000/updateJob/${data?._id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     })
       .then((res) => res.json())
-      .then((result) => {
+      .then(result => {
+        console.log(result);
         if (result.modifiedCount > 0) {
           setControl(!control);
         }
-        console.log(result);
-      });
-  };
+      })
+  }
 
   return (
     <div>
@@ -83,7 +101,7 @@ const MyJobs = () => {
                 <td>{job.vacancy}</td>
                 <td>{job.salary}</td>
                 <td>
-                  <Button variant="primary" onClick={() => setModalShow(true)}>
+                  <Button variant="primary"  onClick={() => setModalShow(true)}>
                     Edit
                   </Button>
                   <UpdateJobModal
